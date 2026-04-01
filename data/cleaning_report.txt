@@ -1,0 +1,50 @@
+============================================================
+  DATA CLEANING REPORT
+  Generated: 2026-04-01 20:20:20
+============================================================
+
+  Raw rows         :    5,050
+  Clean rows        :    4,985
+  Rows removed      :       65
+  Raw columns       :       19
+  Clean columns     :       25
+  Remaining nulls   :        0
+  Remaining dupes   :        0
+
+  COLUMN SUMMARY (cleaned):
+  --------------------------------------------------
+  Order ID                  str            4985 unique
+  Order Date                str            1391 unique
+  Ship Date                 str            1408 unique
+  Ship Mode                 str               4 unique
+  Customer ID               str             299 unique
+  Customer Name             str             305 unique
+  Segment                   str               3 unique
+  City                      str              61 unique
+  State                     str              20 unique
+  Region                    str               4 unique
+  Category                  str               4 unique
+  Sub-Category              str              19 unique
+  Product Name              str            4929 unique
+  Quantity                  int64            12 unique
+  Unit Price                float64        4846 unique
+  Discount                  float64           7 unique
+  Sales                     float64        4802 unique
+  Profit                    float64        4758 unique
+  Shipping Cost             float64        3299 unique
+  Year                      int32             4 unique
+  Month                     int32            12 unique
+  Month Name                str              12 unique
+  Quarter                   str               4 unique
+  Day of Week               str               7 unique
+  Profit Margin (%)         float64        3249 unique
+
+  SALES STATISTICS:
+  --------------------------------------------------
+  Total Sales      : $  16,996,672.93
+  Total Profit     : $   2,388,048.68
+  Total Orders     :           4,985
+  Avg Order Value  : $       3,409.56
+  Avg Profit Margin:          20.38%
+
+============================================================

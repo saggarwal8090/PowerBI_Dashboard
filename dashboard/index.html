@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Analytics Dashboard | Power BI Project</title>
+    <meta name="description" content="Interactive Sales Analytics Dashboard built with real e-commerce data. Explore KPIs, trends, and regional insights.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="dashboard-header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo-icon">📊</div>
+                <div>
+                    <h1>Sales Analytics Dashboard</h1>
+                    <p class="subtitle">E-Commerce Performance | 2021 – 2024</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-badge">Live Preview</div>
+                <div class="header-badge accent">Power BI Project</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filters Bar -->
+    <section id="filters-bar">
+        <div class="filter-group">
+            <label for="filter-year">📅 Year</label>
+            <select id="filter-year">
+                <option value="all">All Years</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="filter-category">🏷️ Category</label>
+            <select id="filter-category">
+                <option value="all">All Categories</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="filter-region">🌎 Region</label>
+            <select id="filter-region">
+                <option value="all">All Regions</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="filter-segment">👥 Segment</label>
+            <select id="filter-segment">
+                <option value="all">All Segments</option>
+            </select>
+        </div>
+        <button id="reset-filters" class="reset-btn">↻ Reset</button>
+    </section>
+
+    <!-- KPI Cards -->
+    <section id="kpi-section">
+        <div class="kpi-card" id="kpi-sales">
+            <div class="kpi-icon">💵</div>
+            <div class="kpi-content">
+                <span class="kpi-label">Total Sales</span>
+                <span class="kpi-value" id="kpi-sales-value">$0</span>
+                <span class="kpi-sub" id="kpi-sales-sub">Loading...</span>
+            </div>
+        </div>
+        <div class="kpi-card" id="kpi-profit">
+            <div class="kpi-icon">💰</div>
+            <div class="kpi-content">
+                <span class="kpi-label">Total Profit</span>
+                <span class="kpi-value" id="kpi-profit-value">$0</span>
+                <span class="kpi-sub" id="kpi-profit-sub">Loading...</span>
+            </div>
+        </div>
+        <div class="kpi-card" id="kpi-orders">
+            <div class="kpi-icon">📦</div>
+            <div class="kpi-content">
+                <span class="kpi-label">Total Orders</span>
+                <span class="kpi-value" id="kpi-orders-value">0</span>
+                <span class="kpi-sub" id="kpi-orders-sub">Loading...</span>
+            </div>
+        </div>
+        <div class="kpi-card" id="kpi-aov">
+            <div class="kpi-icon">📈</div>
+            <div class="kpi-content">
+                <span class="kpi-label">Avg Order Value</span>
+                <span class="kpi-value" id="kpi-aov-value">$0</span>
+                <span class="kpi-sub" id="kpi-aov-sub">Loading...</span>
+            </div>
+        </div>
+        <div class="kpi-card" id="kpi-margin">
+            <div class="kpi-icon">📐</div>
+            <div class="kpi-content">
+                <span class="kpi-label">Profit Margin</span>
+                <span class="kpi-value" id="kpi-margin-value">0%</span>
+                <span class="kpi-sub" id="kpi-margin-sub">Loading...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts Row 1 -->
+    <section class="charts-row">
+        <div class="chart-card wide">
+            <h3 class="chart-title">📈 Monthly Sales Trend</h3>
+            <canvas id="salesTrendChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3 class="chart-title">🌎 Sales by Region</h3>
+            <canvas id="regionChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Charts Row 2 -->
+    <section class="charts-row">
+        <div class="chart-card">
+            <h3 class="chart-title">💰 Profit by Category</h3>
+            <canvas id="categoryChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3 class="chart-title">📉 Profit Trend</h3>
+            <canvas id="profitTrendChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Charts Row 3 -->
+    <section class="charts-row">
+        <div class="chart-card">
+            <h3 class="chart-title">🏷️ Top Sub-Categories by Sales</h3>
+            <canvas id="subCatChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3 class="chart-title">📦 Sales by Ship Mode</h3>
+            <canvas id="shipModeChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section id="insights-section">
+        <h2 class="section-title">💡 Key Business Insights</h2>
+        <div class="insights-grid">
+            <div class="insight-card">
+                <div class="insight-number">1</div>
+                <h4>West Region Dominates</h4>
+                <p>The West region contributes ~32% of total sales, driven by California and Washington markets.</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-number">2</div>
+                <h4>Office Supplies = Profit Engine</h4>
+                <p>Despite lower revenue, Office Supplies achieves the highest profit margins (30–45%).</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-number">3</div>
+                <h4>Q4 Holiday Spike</h4>
+                <p>Sales consistently spike 40%+ during Oct–Dec across all years due to holiday shopping.</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-number">4</div>
+                <h4>Heavy Discounts Hurt Profits</h4>
+                <p>Discounts ≥25% cause ~40% of Furniture orders to lose money. Cap at 20% recommended.</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-number">5</div>
+                <h4>Corporate Has Higher AOV</h4>
+                <p>Consumer drives 52% of volume, but Corporate segment has 25–30% higher Average Order Value.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Power BI Sales Analytics Dashboard | Built with Python, Pandas & Power BI | Portfolio Project</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
